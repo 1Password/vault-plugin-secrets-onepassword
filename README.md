@@ -102,6 +102,12 @@ $ vault write op/config @op-connect-config.json
 - **OP_CONNECT_TOKEN** (required if `op_connect_token` is not set in configuration): The API token created to be used to connect with the 1Password Connect API.
 
 ### Commands
+---
+**NOTE**
+
+If multiple 1Password vaults/items have the same `title` when using a title in the access path, the desired action will be performed on the oldest vault/item. Furthermore, titles that include white space characters cannot be used.
+
+---
 
 **Listing vaults** available to the 1Password API token:
 
@@ -112,31 +118,32 @@ $ vault list op/vaults
 **Listing items** stored in the specified vault:
 
 ```bash
-$ vault list op/vaults/<vault_id>
+# list vaults by id
+$ vault list op/vaults/<vault_id_or_title>
 ```
 
 **Read item**:
 
 ```bash
-$ vault read op/vaults/<vault_id>/items/<item_id>
+$ vault read op/vaults/<vault_id_or_title>/items/<item_id_or_title>
 ```
 
 **Create item** (Please see the Creating and Updating Items section for more details on the json file contents):
 
 ```bash
-$ vault write op/vaults/<vault_id>/items @some_json_file.json
+$ vault write op/vaults/<vault_id_or_title>/items @some_json_file.json
 ```
 
 **Update item** (Please see the Creating and Updating Items section for more details on the json file contents):
 
 ```bash
-$ vault write op/vaults/<vault_id>/items/<item_id> @some_json_file.json
+$ vault write op/vaults/<vault_id_or_title>/items/<item_id_or_title> @some_json_file.json
 ```
 
 **Delete item**:
 
 ```bash
-$ vault write op/vaults/<vault_id>/items/<item_id>
+$ vault write op/vaults/<vault_id_or_title>/items/<item_id_or_title>
 ```
 
 ### **Creating and Updating Items Details**

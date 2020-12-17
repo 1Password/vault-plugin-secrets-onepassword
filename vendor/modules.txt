@@ -1,4 +1,4 @@
-# github.com/1Password/connect-sdk-go v0.0.1
+# github.com/1Password/connect-sdk-go v0.0.2
 ## explicit
 github.com/1Password/connect-sdk-go/connect
 github.com/1Password/connect-sdk-go/onepassword
@@ -14,7 +14,6 @@ github.com/golang/protobuf/ptypes/timestamp
 github.com/golang/snappy
 # github.com/google/uuid v1.1.2
 ## explicit
-github.com/google/uuid
 # github.com/hashicorp/errwrap v1.0.0
 ## explicit
 github.com/hashicorp/errwrap

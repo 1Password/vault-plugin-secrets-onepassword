@@ -3,11 +3,11 @@ package onepassword
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"testing"
 	"time"
 
 	"github.com/1Password/connect-sdk-go/onepassword"
-	"github.com/google/uuid"
 	hclog "github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/vault/sdk/logical"
 )
@@ -17,8 +17,19 @@ const (
 	maxLeaseTTLHr     = 12
 )
 
+var (
+	vaultId1   = "2zhyki73hfeodll4ljtgzwftwu"
+	vaultName1 = "Test Vault1"
+)
+
+var (
+	vaultId2   = "2zhyki73hfeodll4ljtgzwftwv"
+	vaultName2 = "Test Vault2"
+)
+
 var OpConnectClient = &TestClient{}
 var Items = map[string]*onepassword.Item{}
+var characters = []rune("abcdefghijklmnopqrstuvwxyz123456789")
 
 func TestClientWithConfigSet(t *testing.T) {
 	t.Parallel()
@@ -83,6 +94,7 @@ func setOnePassswordConnectMocks() {
 	DoGetItemsFunc = listItems
 	DoCreateItemFunc = createItem
 	DoGetItemFunc = getItem
+	DoGetItemsByTitleFunc = getItemsByTitle
 	DoDeleteItemFunc = deleteItem
 	DoUpdateItemFunc = updateItem
 }
@@ -100,19 +112,20 @@ func getTestConfig() *logical.BackendConfig {
 func listVaults() ([]onepassword.Vault, error) {
 	vaults := []onepassword.Vault{
 		{
-			Description: "Test Vault1",
-			ID:          "test1",
+			Name: vaultName1,
+			ID:   vaultId1,
 		},
 		{
-			Description: "Test Vault2",
-			ID:          "test2",
+			Name: vaultName2,
+			ID:   vaultId2,
 		},
 	}
 	return vaults, nil
 }
 
 func createItem(item *onepassword.Item, vaultUUID string) (*onepassword.Item, error) {
-	item.ID = uuid.New().String()
+	item.ID = RandID()
+	item.CreatedAt = time.Now()
 	Items[item.ID] = item
 	return item, nil
 }
@@ -130,6 +143,16 @@ func getItem(itemUUID, vaultUUID string) (*onepassword.Item, error) {
 	return item, nil
 }
 
+func getItemsByTitle(title, vaultUUID string) ([]onepassword.Item, error) {
+	var itemsWithTitle []onepassword.Item
+	for _, item := range Items {
+		if item.Title == title {
+			itemsWithTitle = append(itemsWithTitle, *item)
+		}
+	}
+	return itemsWithTitle, nil
+}
+
 func deleteItem(item *onepassword.Item, vaultUUID string) error {
 	delete(Items, item.ID)
 	return nil
@@ -141,4 +164,12 @@ func listItems(vaultUUID string) ([]onepassword.Item, error) {
 		items = append(items, *item)
 	}
 	return items, nil
+}
+
+func RandID() string {
+	b := make([]rune, 26)
+	for i := range b {
+		b[i] = characters[rand.Intn(len(characters))]
+	}
+	return string(b)
 }

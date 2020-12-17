@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/1Password/connect-sdk-go/onepassword"
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/vault/sdk/framework"
 	"github.com/hashicorp/vault/sdk/logical"
@@ -46,13 +47,17 @@ func (b *backend) handleListVaults(ctx context.Context, req *logical.Request, da
 	if err != nil {
 		return nil, errwrap.Wrapf("Unable to list vaults: {{err}}", err)
 	}
+	return generateVaultList(vaults), nil
+}
 
+func generateVaultList(vaults []onepassword.Vault) *logical.Response {
 	var vault_list []string
 	vault_map := make(map[string]interface{})
 	for i := 0; i < len(vaults); i++ {
-		vault_list = append(vault_list, vaults[i].ID)
-		vault_map[vaults[i].ID] = vaults[i].Name
+		key := fmt.Sprintf("%v %v", vaults[i].Name, vaults[i].ID)
+		vault_list = append(vault_list, key)
+		vault_map[key] = vaults[i].ID
 	}
 
-	return logical.ListResponseWithInfo(vault_list, vault_map), nil
+	return logical.ListResponseWithInfo(vault_list, vault_map)
 }
