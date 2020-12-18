@@ -12,8 +12,6 @@ import (
 )
 
 func TestItemsPath(t *testing.T) {
-	t.Parallel()
-
 	b, reqStorage := getTestBackendWithCachedClient(t)
 
 	item1 := generateVaultItem()
@@ -24,11 +22,13 @@ func TestItemsPath(t *testing.T) {
 	item2 := generateVaultItem()
 	id2 := testAddItem(t, b, reqStorage, item2, expectedCategory)
 
+	key1 := fmt.Sprintf("%s %s", item1["title"], id1)
+	key2 := fmt.Sprintf("%s %s", item2["title"], id2)
 	expectedListedItems := map[string]interface{}{
-		"keys": []string{id1, id2},
+		"keys": []string{key1, key2},
 		"keys_info": map[string]interface{}{
-			id1: item1["title"],
-			id2: item2["title"],
+			key1: id1,
+			key2: id2,
 		},
 	}
 	testListItems(t, b, reqStorage, expectedListedItems)
@@ -38,6 +38,41 @@ func TestItemsPath(t *testing.T) {
 	item3 := generateVaultItem()
 	testUpdateItem(t, b, reqStorage, item3, expectedCategory, id1)
 	testReadItem(t, b, reqStorage, item3, id1)
+	testDeleteItem(t, b, reqStorage, id1)
+}
+
+func TestItemsPathByTitle(t *testing.T) {
+	b, reqStorage := getTestBackendWithCachedClient(t)
+
+	item1 := generateVaultItem()
+	expectedCategory := item1["category"].(string)
+	id1 := testAddItem(t, b, reqStorage, item1, expectedCategory)
+	testReadItem(t, b, reqStorage, item1, item1["title"].(string))
+
+	item2 := generateVaultItem()
+	item2["title"] = "newtitle"
+	id2 := testAddItem(t, b, reqStorage, item2, expectedCategory)
+
+	key1 := fmt.Sprintf("%s %s", item1["title"], id1)
+	key2 := fmt.Sprintf("%s %s", item2["title"], id2)
+	expectedListedItems := map[string]interface{}{
+		"keys": []string{key1, key2},
+		"keys_info": map[string]interface{}{
+			key1: id1,
+			key2: id2,
+		},
+	}
+	testListItems(t, b, reqStorage, expectedListedItems)
+	testDeleteItem(t, b, reqStorage, item2["title"].(string))
+	testReadNonExistentItem(t, b, reqStorage, item2["title"].(string))
+
+	item3 := generateVaultItem()
+	testUpdateItem(t, b, reqStorage, item3, expectedCategory, item1["title"].(string))
+	testReadItem(t, b, reqStorage, item3, item1["title"].(string))
+
+	// Tests that the older item is accessed when using two items with the same name (item1 and item3)
+	testDeleteItem(t, b, reqStorage, item3["title"].(string))
+	testReadNonExistentItem(t, b, reqStorage, id1)
 }
 
 func testReadNonExistentItem(t *testing.T, b logical.Backend, s logical.Storage, id string) {
@@ -223,13 +258,13 @@ func testListItems(t *testing.T, b logical.Backend, s logical.Storage, expected 
 func generateVaultItem() map[string]interface{} {
 	return map[string]interface{}{
 		"category": "database",
-		"title":    "Test Item",
+		"title":    "title",
 		"fields": []map[string]interface{}{
 			{
 				"id":    "some_id",
 				"type":  "STRING",
 				"label": "some title",
-				"value": "some vlaue",
+				"value": RandID(),
 			},
 			{
 				"id":      "username",

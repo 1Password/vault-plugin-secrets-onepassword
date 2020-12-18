@@ -4,8 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/1Password/connect-sdk-go/onepassword"
 	"strings"
+
+	"github.com/1Password/connect-sdk-go/connect"
+	"github.com/1Password/connect-sdk-go/onepassword"
 
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/vault/sdk/framework"
@@ -144,11 +146,15 @@ func (b *backend) handleReadItem(ctx context.Context, req *logical.Request, data
 		return nil, errwrap.Wrapf("Unable to fetch client: {{err}}", err)
 	}
 
-	id := data.Get("id").(string)
-	vaultParam := data.Get("vault").(string)
-	vault, err := b.getVault(req.Storage, vaultParam)
+	requestedVault := data.Get("vault").(string)
+	vault, err := b.getVaultId(client, requestedVault)
 	if err != nil {
 		return nil, errwrap.Wrapf("Unable to retrieve item: {{err}}", err)
+	}
+
+	id, err := b.getItemId(client, data.Get("id").(string), vault)
+	if err != nil {
+		return nil, errwrap.Wrapf("Unable to update item: {{err}}", err)
 	}
 
 	item, err := client.GetItem(id, vault)
@@ -173,8 +179,7 @@ func (b *backend) handleWriteItem(ctx context.Context, req *logical.Request, dat
 		return nil, fmt.Errorf("Unable to fetch client")
 	}
 
-	vaultParam := data.Get("vault").(string)
-	vault, err := b.getVault(req.Storage, vaultParam)
+	vault, err := b.getVaultId(client, data.Get("vault").(string))
 	if err != nil {
 		return nil, errwrap.Wrapf("Unable to create item: {{err}}", err)
 	}
@@ -203,8 +208,7 @@ func (b *backend) handleListItems(ctx context.Context, req *logical.Request, dat
 		return nil, fmt.Errorf("Unable to fetch client")
 	}
 
-	vaultParam := data.Get("vault").(string)
-	vault, err := b.getVault(req.Storage, vaultParam)
+	vault, err := b.getVaultId(client, data.Get("vault").(string))
 	if err != nil {
 		return nil, errwrap.Wrapf("Unable to list items: {{err}}", err)
 	}
@@ -214,14 +218,7 @@ func (b *backend) handleListItems(ctx context.Context, req *logical.Request, dat
 		return nil, errwrap.Wrapf("Unable to list items: {{err}}", err)
 	}
 
-	var item_list []string
-	item_map := make(map[string]interface{})
-	for i := 0; i < len(items); i++ {
-		item_list = append(item_list, items[i].ID)
-		item_map[items[i].ID] = items[i].Title
-	}
-
-	return logical.ListResponseWithInfo(item_list, item_map), nil
+	return generateItemList(items), nil
 }
 
 func (b *backend) handleDeleteItem(ctx context.Context, req *logical.Request, data *framework.FieldData) (*logical.Response, error) {
@@ -230,11 +227,13 @@ func (b *backend) handleDeleteItem(ctx context.Context, req *logical.Request, da
 		return nil, fmt.Errorf("Unable to fetch client")
 	}
 
-	id := data.Get("id").(string)
-	vaultParam := data.Get("vault").(string)
-	vault, err := b.getVault(req.Storage, vaultParam)
+	vault, err := b.getVaultId(client, data.Get("vault").(string))
 	if err != nil {
-		return nil, errwrap.Wrapf("Unable to delete item: {{err}}", err)
+		return nil, errwrap.Wrapf("Unable to retrieve item: {{err}}", err)
+	}
+	id, err := b.getItemId(client, data.Get("id").(string), vault)
+	if err != nil {
+		return nil, errwrap.Wrapf("Unable to update item: {{err}}", err)
 	}
 
 	item := onepassword.Item{
@@ -258,8 +257,7 @@ func (b *backend) handleUpdateItem(ctx context.Context, req *logical.Request, da
 		return nil, fmt.Errorf("Unable to fetch client")
 	}
 
-	vaultParam := data.Get("vault").(string)
-	vault, err := b.getVault(req.Storage, vaultParam)
+	vault, err := b.getVaultId(client, data.Get("vault").(string))
 	if err != nil {
 		return nil, errwrap.Wrapf("Unable to update item: {{err}}", err)
 	}
@@ -269,7 +267,10 @@ func (b *backend) handleUpdateItem(ctx context.Context, req *logical.Request, da
 		return nil, errwrap.Wrapf("Unable to update item: {{err}}", err)
 	}
 
-	item.ID = data.Get("id").(string)
+	item.ID, err = b.getItemId(client, data.Get("id").(string), vault)
+	if err != nil {
+		return nil, errwrap.Wrapf("Unable to update item: {{err}}", err)
+	}
 
 	createdItem, err := client.UpdateItem(item, vault)
 	if err != nil {
@@ -335,9 +336,70 @@ func buildItem(b *backend, vault string, data *framework.FieldData) (*onepasswor
 		item.Fields = append(item.Fields, &itemField)
 	}
 
-	something, _ := json.Marshal(item)
-	b.Logger().Debug(fmt.Sprintf("%v", string(something)))
+	json.Marshal(item)
 	return &item, nil
+}
+
+func (b *backend) getVaultId(client connect.Client, vaultIdentifier string) (string, error) {
+	if !IsValidClientUUID(vaultIdentifier) {
+		vaults, err := client.GetVaultsByTitle(vaultIdentifier)
+		if err != nil {
+			return "", err
+		}
+
+		if len(vaults) == 0 {
+			return "", fmt.Errorf("No vaults found with identifier %q", vaultIdentifier)
+		}
+
+		oldestVault := vaults[0]
+		if len(vaults) > 1 {
+			for _, returnedVault := range vaults {
+				if returnedVault.CreatedAt.Before(oldestVault.CreatedAt) {
+					oldestVault = returnedVault
+				}
+			}
+			b.Logger().Info(fmt.Sprintf("%v 1Password vaults found with the title %q. Will use vault %q as it is the oldest.", len(vaults), vaultIdentifier, oldestVault.ID))
+		}
+		vaultIdentifier = oldestVault.ID
+	}
+	return vaultIdentifier, nil
+}
+
+func (b *backend) getItemId(client connect.Client, itemIdentifier string, vaultId string) (string, error) {
+	if !IsValidClientUUID(itemIdentifier) {
+		items, err := client.GetItemsByTitle(itemIdentifier, vaultId)
+		if err != nil {
+			return "", err
+		}
+
+		if len(items) == 0 {
+			return "", fmt.Errorf("No items found with identifier %q", itemIdentifier)
+		}
+
+		oldestItem := items[0]
+		if len(items) > 1 {
+			for _, returnedItem := range items {
+				if returnedItem.CreatedAt.Before(oldestItem.CreatedAt) {
+					oldestItem = returnedItem
+				}
+			}
+			b.Logger().Info(fmt.Sprintf("%v 1Password items found with the title %q. Will use item %q as it is the oldest.", len(items), itemIdentifier, oldestItem.ID))
+		}
+		itemIdentifier = oldestItem.ID
+	}
+	return itemIdentifier, nil
+}
+
+func generateItemList(items []onepassword.Item) *logical.Response {
+	var item_list []string
+	item_map := make(map[string]interface{})
+	for i := 0; i < len(items); i++ {
+		key := fmt.Sprintf("%v %v", items[i].Title, items[i].ID)
+		item_list = append(item_list, key)
+		item_map[key] = items[i].ID
+	}
+
+	return logical.ListResponseWithInfo(item_list, item_map)
 }
 
 const fieldsDescription = `The list of fields to create for the item. This is represented as a list of maps.

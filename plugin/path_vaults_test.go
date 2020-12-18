@@ -2,6 +2,7 @@ package onepassword
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/hashicorp/vault/sdk/logical"
@@ -12,11 +13,14 @@ func TestListVaults(t *testing.T) {
 
 	b, reqStorage := getTestBackendWithCachedClient(t)
 
+	key1 := fmt.Sprintf("%s %s", vaultName1, vaultId1)
+	key2 := fmt.Sprintf("%s %s", vaultName2, vaultId2)
+
 	expected := map[string]interface{}{
-		"keys": []string{"test1", "test2"},
+		"keys": []string{key1, key2},
 		"keys_info": map[string]interface{}{
-			"test1": "Test Vault1",
-			"test2": "Test Vault2",
+			key1: vaultId1,
+			key2: vaultId2,
 		},
 	}
 	testListVaults(t, b, reqStorage, expected)

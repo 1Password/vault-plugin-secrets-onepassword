@@ -36,6 +36,8 @@ dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7
 git.apache.org/thrift.git v0.12.0/go.mod h1:fPE2ZNJGynbRyZ4dJvy6G277gSllfV2HJqblrnkyeyg=
 github.com/1Password/connect-sdk-go v0.0.1 h1:qsFZQDQ+JirZRwSom/p6zzNqkkcYAYx4EXivUyPhvBo=
 github.com/1Password/connect-sdk-go v0.0.1/go.mod h1:br2BWk2sqgJFnOFK5WSDfBBmwQ6E7hV9LoPqrtHGRNY=
+github.com/1Password/connect-sdk-go v0.0.2 h1:IBamxGS17zItC9TRwp/0G0Fh1GRV3mqOkcWvpK05Mx8=
+github.com/1Password/connect-sdk-go v0.0.2/go.mod h1:br2BWk2sqgJFnOFK5WSDfBBmwQ6E7hV9LoPqrtHGRNY=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/Djarvur/go-err113 v0.0.0-20200511133814-5174e21577d5/go.mod h1:4UJr5HIiMZrwgkSPdsjy2uOQExX/WEILpIrO9UPGuXs=
