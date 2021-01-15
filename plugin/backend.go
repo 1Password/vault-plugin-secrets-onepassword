@@ -126,5 +126,4 @@ func (b *backend) handleExistenceCheck(ctx context.Context, req *logical.Request
 
 const opHelp = `
 The op-connect plugin is a secrets backend that allows for the retrieval of items from 1Password using 1Password Connect.
-Version 
 `
