@@ -29,7 +29,7 @@ Start a Vault server with this config file:
 $ vault server -config=path/to/config.json ...
 ```
 
-Register the plugin in in the Vault Server's plugin catalog:
+Register the plugin with the Vault Server's plugin catalog:
 
 ```bash
 $ vault write sys/plugins/catalog/secret/op-connect \
@@ -274,7 +274,7 @@ Example Database Item:
 ### Running Tests
 
 ```bash
-$ go test -v ./... -cover
+make test
 ```
 
 ## Security
@@ -283,4 +283,4 @@ $ go test -v ./... -cover
 
 Please file requests via [**BugCrowd**](https://bugcrowd.com/agilebits). 
 
-For information about security practices, please visit our [Security homepage](https://bugcrowd.com/agilebits).
+For information about security practices, please visit our [Security homepage](https://support.1password.com/cs/connect-security/).

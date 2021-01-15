@@ -7,11 +7,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/1Password/connect-sdk-go/connect"
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/vault/sdk/framework"
 	"github.com/hashicorp/vault/sdk/logical"
 	"github.com/patrickmn/go-cache"
-	"github.com/1Password/connect-sdk-go/connect"
 )
 
 const (
@@ -125,5 +125,6 @@ func (b *backend) handleExistenceCheck(ctx context.Context, req *logical.Request
 }
 
 const opHelp = `
-The OP backend is a secrets backend that allows for the retreival of items from 1Password using 1Password Connect.
+The op-connect plugin is a secrets backend that allows for the retrieval of items from 1Password using 1Password Connect.
+Version 
 `
