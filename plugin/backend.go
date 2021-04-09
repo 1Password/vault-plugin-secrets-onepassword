@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/1Password/connect-sdk-go/connect"
+	"github.com/1Password/vault-plugin-secrets-onepassword/version"
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/vault/sdk/framework"
 	"github.com/hashicorp/vault/sdk/logical"
@@ -21,6 +22,10 @@ const (
 
 	cacheCleanup    = 30 * time.Minute
 	cacheExpiration = 30 * time.Minute
+)
+
+const (
+	vaultUserAgent = "vault-connect/%s"
 )
 
 // Factory returns a new backend as logical.Backend.
@@ -67,6 +72,7 @@ type backend struct {
 }
 
 func (b *backend) OnePasswordConnectClient(s logical.Storage) (connect.Client, error) {
+	vaultUserAgent := fmt.Sprintf(vaultUserAgent, version.Version)
 
 	cachedClient, found := b.configCache.Get(clientCache)
 	if found {
@@ -84,7 +90,7 @@ func (b *backend) OnePasswordConnectClient(s logical.Storage) (connect.Client, e
 		return nil, fmt.Errorf("No config set for op backend.")
 	}
 
-	client := connect.NewClient(config.Host, config.OPToken)
+	client := connect.NewClientWithUserAgent(config.Host, config.OPToken, vaultUserAgent)
 	b.configCache.Set(clientCache, client, -1)
 
 	return client, nil
