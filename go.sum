@@ -38,6 +38,8 @@ github.com/1Password/connect-sdk-go v0.0.1 h1:qsFZQDQ+JirZRwSom/p6zzNqkkcYAYx4EX
 github.com/1Password/connect-sdk-go v0.0.1/go.mod h1:br2BWk2sqgJFnOFK5WSDfBBmwQ6E7hV9LoPqrtHGRNY=
 github.com/1Password/connect-sdk-go v0.0.2 h1:IBamxGS17zItC9TRwp/0G0Fh1GRV3mqOkcWvpK05Mx8=
 github.com/1Password/connect-sdk-go v0.0.2/go.mod h1:br2BWk2sqgJFnOFK5WSDfBBmwQ6E7hV9LoPqrtHGRNY=
+github.com/1Password/connect-sdk-go v1.0.1 h1:BOeMIxVk6/ISmLNWUkSxEbVI7tNr5+aNXIobMM0/I0U=
+github.com/1Password/connect-sdk-go v1.0.1/go.mod h1:br2BWk2sqgJFnOFK5WSDfBBmwQ6E7hV9LoPqrtHGRNY=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/Djarvur/go-err113 v0.0.0-20200511133814-5174e21577d5/go.mod h1:4UJr5HIiMZrwgkSPdsjy2uOQExX/WEILpIrO9UPGuXs=
