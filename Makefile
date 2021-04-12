@@ -1,3 +1,5 @@
+export MAIN_BRANCH ?= main
+
 GOARCH = amd64
 
 UNAME = $(shell uname -s)
