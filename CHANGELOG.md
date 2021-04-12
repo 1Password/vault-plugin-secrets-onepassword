@@ -1,12 +1,24 @@
 [//]: # (START/LATEST)
 # Latest
 
+## Features
+  * A user-friendly description of a new feature. {issue-number}
+
+## Fixes
+ * A user-friendly description of a fix. {issue-number}
+
+## Security
+ * A user-friendly description of a security fix. {issue-number}
+
+---
+
+[//]: # (START/v1.0.0)
+# v1.0.0
+
 ## Features:
-*
-## Fixes:
-*
-## Security:
-*
+* Added release automation
+* Upgraded to use Connect SDK v1.0.1
+* Vault backend properly identifies itself to the Connect API with a correct user agent
 
 ---
 
