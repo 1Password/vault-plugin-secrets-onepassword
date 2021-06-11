@@ -269,6 +269,23 @@ Example Database Item:
 }
 ```
 
+## **Vault Enterprise Namespaces**
+The 1Password Secrets Backend supports Vault Enterprise Namespaces. If you are using a namespaced Vault, please note that the The 1Password Secrets Backend must be enabled for each namespace.
+
+Enabling the plugin for a namespace can be done with the following command:
+```
+vault secrets enable -namespace=<namespace> op
+```
+
+The plugin also requires configuration in each namespace. Please refer to the [Plugin Configuration section](#plugin-configuration) for example configuration. 
+
+Applying the configuration to a namespace can be done with the following command:
+
+```bash
+$ vault write -namespace=<namespace> op/config @op-connect-config.json
+```
+
+For more information on Vault Namespaces please refer to the official [Vault Enterprise Namespaces Documentation](https://www.vaultproject.io/docs/enterprise/namespaces)
 ## Development
 
 ### Running Tests
