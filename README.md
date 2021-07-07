@@ -92,7 +92,7 @@ In order to configure your plugin to access the 1Password Connect API, create a 
 Save the configuration file:
 
 ```bash
-$ vault write op/config @op-connect-config.json
+$ vault write op-connect/config @op-connect-config.json
 ```
 
 ## Usage
