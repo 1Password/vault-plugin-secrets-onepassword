@@ -14,25 +14,25 @@ Prerequisites:
 The first step to using this plugin is to build it. Copy the binary to the `plugin directory` of your choice. For example:
 
 ```bash
-$ go build -o vault/plugins/op-connect .
+go build -o vault/plugins/op-connect .
 ```
 
 This directory will be specified as the `plugin_directory` in the Vault config used to start the server.
 
-```json
+```
 plugin_directory = "path/to/plugin/directory"
 ```
 
 Start a Vault server with this config file:
 
 ```bash
-$ vault server -config=path/to/config.json ...
+vault server -config=path/to/config.json ...
 ```
 
 Register the plugin with the Vault Server's plugin catalog:
 
 ```bash
-$ vault write sys/plugins/catalog/secret/op-connect \
+vault write sys/plugins/catalog/secret/op-connect \
 sha_256="$(shasum -a 256 path/to/plugin/directory/op-connect | cut -d " " -f1)" \
 command="op-connect"
 ```
@@ -40,7 +40,7 @@ command="op-connect"
 Enable the plugin:
 
 ```bash
-$ vault secrets enable --plugin-name='op-connect' --path="op" plugin
+vault secrets enable --plugin-name='op-connect' --path="op" plugin
 ...
 
 Successfully enabled 'op-connect' at 'op'!
@@ -49,7 +49,7 @@ Successfully enabled 'op-connect' at 'op'!
 To check if your plugin has been registered you should be able to see the plugin when listing all registered plugins:
 
 ```bash
-$ vault secrets list
+vault secrets list
 ```
 
 ### Quickstart Local Installation
@@ -57,25 +57,25 @@ $ vault secrets list
 The first step to using this plugin is to build it. Copy the binary to your `plugin directory` of your choice. For example:
 
 ```bash
-$ go build -o vault/plugins/op-connect .
+go build -o vault/plugins/op-connect .
 ```
 
 Run the vault server locally with a 1Password Connect plugin:
 
 ```bash
-$ vault server -dev -dev-root-token-id=root -dev-plugin-dir=./vault/plugins -log-level=debug
+vault server -dev -dev-root-token-id=root -dev-plugin-dir=./vault/plugins -log-level=debug
 ```
 
 Enable the plugin:
 
 ```bash
-$ vault secrets enable op-connect
+vault secrets enable op-connect
 ```
 
 To check if your plugin has been registered you should be able to see the plugin when listing all registered plugins:
 
 ```bash
-$ vault secrets list
+vault secrets list
 ```
 
 ### Plugin Configuration
@@ -92,7 +92,7 @@ In order to configure your plugin to access the 1Password Connect API, create a 
 Save the configuration file:
 
 ```bash
-$ vault write op-connect/config @op-connect-config.json
+vault write op-connect/config @op-connect-config.json
 ```
 
 ## Usage
@@ -112,38 +112,38 @@ If multiple 1Password vaults/items have the same `title` when using a title in t
 **Listing vaults** available to the 1Password API token:
 
 ```bash
-$ vault list op/vaults
+vault list op/vaults
 ```
 
 **Listing items** stored in the specified vault:
 
 ```bash
 # list vaults by id
-$ vault list op/vaults/<vault_id_or_title>
+vault list op/vaults/<vault_id_or_title>
 ```
 
 **Read item**:
 
 ```bash
-$ vault read op/vaults/<vault_id_or_title>/items/<item_id_or_title>
+vault read op/vaults/<vault_id_or_title>/items/<item_id_or_title>
 ```
 
 **Create item** (Please see the Creating and Updating Items section for more details on the json file contents):
 
 ```bash
-$ vault write op/vaults/<vault_id_or_title>/items @some_json_file.json
+vault write op/vaults/<vault_id_or_title>/items @some_json_file.json
 ```
 
 **Update item** (Please see the Creating and Updating Items section for more details on the json file contents):
 
 ```bash
-$ vault write op/vaults/<vault_id_or_title>/items/<item_id_or_title> @some_json_file.json
+vault write op/vaults/<vault_id_or_title>/items/<item_id_or_title> @some_json_file.json
 ```
 
 **Delete item**:
 
 ```bash
-$ vault write op/vaults/<vault_id_or_title>/items/<item_id_or_title>
+vault write op/vaults/<vault_id_or_title>/items/<item_id_or_title>
 ```
 
 ### **Creating and Updating Items Details**
@@ -172,36 +172,36 @@ Example Login Item with custom section:
   "category": "login",
   "title": "Example Login",
   "fields": [
-  {
-    "id": "username",
-    "label": "username",
-    "type": "STRING",
-    "purpose": "USERNAME",
-    "value": "my_user"
-  },
-  {
-    "id": "password",
-    "label": "password",
-    "purpose": "PASSWORD",
-    "type": "CONCEALED",
-    "value": "",
-    "generate": true
-  },
-  {
-    "id": "custom_field_id",
-    "type": "STRING",
-    "label": "My Custom Field",
-    "value": "my custom value",
-    "section": {
-      "id": "my_new_section"
-    }
-  },
+      {
+        "id": "username",
+        "label": "username",
+        "type": "STRING",
+        "purpose": "USERNAME",
+        "value": "my_user"
+      },
+      {
+        "id": "password",
+        "label": "password",
+        "purpose": "PASSWORD",
+        "type": "CONCEALED",
+        "value": "",
+        "generate": true
+      },
+      {
+        "id": "custom_field_id",
+        "type": "STRING",
+        "label": "My Custom Field",
+        "value": "my custom value",
+        "section": {
+          "id": "my_new_section"
+        }
+      }
   ],
   "sections": [
-  {
-    "id": "my_new_section",
-    "label": "New Section"
-  }
+      {
+        "id": "my_new_section",
+        "label": "New Section"
+      }
   ]
 }
 ```
@@ -282,7 +282,7 @@ The plugin also requires configuration in each namespace. Please refer to the [P
 Applying the configuration to a namespace can be done with the following command:
 
 ```bash
-$ vault write -namespace=<namespace> op/config @op-connect-config.json
+vault write -namespace=<namespace> op/config @op-connect-config.json
 ```
 
 For more information on Vault Namespaces please refer to the official [Vault Enterprise Namespaces Documentation](https://www.vaultproject.io/docs/enterprise/namespaces)
