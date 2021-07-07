@@ -282,7 +282,7 @@ The plugin also requires configuration in each namespace. Please refer to the [P
 Applying the configuration to a namespace can be done with the following command:
 
 ```bash
-vault write -namespace=<namespace> op/config @op-connect-config.json
+vault write -namespace=<namespace> op-connect/config @op-connect-config.json
 ```
 
 For more information on Vault Namespaces please refer to the official [Vault Enterprise Namespaces Documentation](https://www.vaultproject.io/docs/enterprise/namespaces)
