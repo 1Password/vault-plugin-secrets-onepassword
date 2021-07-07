@@ -80,7 +80,7 @@ $ vault secrets list
 
 ### Plugin Configuration
 
-In order to configure your plugin to access the 1Password Connect API, create a configuration json file:
+In order to configure your plugin to access the 1Password Connect API, create a configuration json file. The value for `host_address_of_1Password_Connect_API` should be prefixed by http/https:
 
 ```json
 {
