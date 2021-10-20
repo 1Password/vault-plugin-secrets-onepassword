@@ -69,7 +69,7 @@ vault server -dev -dev-root-token-id=root -dev-plugin-dir=./vault/plugins -log-l
 Enable the plugin:
 
 ```bash
-vault secrets enable op-connect
+vault secrets enable --path="op" op-connect
 ```
 
 To check if your plugin has been registered you should be able to see the plugin when listing all registered plugins:
