@@ -9,7 +9,7 @@ Prerequisites:
 - A basic understanding of [Hashicorp Vault](https://www.hashicorp.com/products/vault). Read this guide to [get started with Vault](https://learn.hashicorp.com/tutorials/vault/getting-started-install).
 - [Hashicorp Vault Command Line](https://www.vaultproject.io/docs/install) Installed
 - A running Vault server (However, for a Quickstart this guide does have instructions on running a `local` server with the 1Password secrets backend).
-- 1Password Connect deployed in your infrastructure.
+- [1Password Connect](https://support.1password.com/secrets-automation/) deployed in your infrastructure.
 
 The first step to using this plugin is to build it. Copy the binary to the `plugin directory` of your choice. For example:
 
