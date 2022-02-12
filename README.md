@@ -119,7 +119,7 @@ vault list op/vaults
 
 ```bash
 # list vaults by id
-vault list op/vaults/<vault_id_or_title>/list
+vault list op/vaults/<vault_id_or_title>/items
 ```
 
 **Read item**:
