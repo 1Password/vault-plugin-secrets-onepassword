@@ -4,6 +4,8 @@ github.com/1Password/connect-sdk-go/connect
 github.com/1Password/connect-sdk-go/onepassword
 # github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310
 github.com/armon/go-radix
+# github.com/gogo/protobuf v1.3.2
+## explicit
 # github.com/golang/protobuf v1.4.2
 ## explicit
 github.com/golang/protobuf/proto
@@ -138,8 +140,7 @@ golang.org/x/crypto/cryptobyte/asn1
 golang.org/x/crypto/ed25519
 golang.org/x/crypto/ed25519/internal/edwards25519
 golang.org/x/crypto/pbkdf2
-# golang.org/x/net v0.0.0-20200822124328-c89045814202
-## explicit
+# golang.org/x/net v0.0.0-20201021035429-f5854403a974
 golang.org/x/net/context
 golang.org/x/net/http/httpguts
 golang.org/x/net/http2
@@ -147,8 +148,7 @@ golang.org/x/net/http2/hpack
 golang.org/x/net/idna
 golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
-# golang.org/x/sys v0.0.0-20200905004654-be1d3432aa8f
-## explicit
+# golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f
 golang.org/x/sys/cpu
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
