@@ -236,22 +236,20 @@ Example Database Item:
       "id": "username",
       "label": "username",
       "type": "STRING",
-      "purpose": "USERNAME",
       "value": "my_user"
     },
     {
       "id": "password",
       "label": "password",
-      "purpose": "PASSWORD",
       "type": "CONCEALED",
       "value": "",
       "generate": true
     },
     {
       "id": "hostname",
-      "label": "hostname",
+      "label": "server",
       "type": "STRING",
-      "value": "my_host"
+      "value": "http://my_host"
     },
     {
       "id": "database",
@@ -264,6 +262,18 @@ Example Database Item:
       "label": "port",
       "type": "STRING",
       "value": "8080"
+    },
+    {
+      "id": "database",
+      "label": "database",
+      "type": "STRING",
+      "value": "my-database"
+    },
+    {
+      "id": "database_type",
+      "label": "type",
+      "type": "MENU",
+      "value": "mysql"
     }
   ]
 }
