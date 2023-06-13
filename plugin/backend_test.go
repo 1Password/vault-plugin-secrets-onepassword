@@ -96,7 +96,20 @@ func setOnePassswordConnectMocks() {
 	DoGetItemFunc = getItem
 	DoGetItemsByTitleFunc = getItemsByTitle
 	DoDeleteItemFunc = deleteItem
+	DoDeleteItemByIDFunc = deleteItemByID
+	DoDeleteItemByTitleFunc = deleteItemByTitle
 	DoUpdateItemFunc = updateItem
+	DoDownloadFileFunc = downloadFile
+	DoGetFileFunc = getFile
+	DoGetFileContentFunc = getFileContent
+	DoGetFilesFunc = getFiles
+	DoGetItemByUUIDFunc = getItemByUUID
+	DoGetVaultFunc = getVault
+	DoGetVaultByTitleFunc = getVaultByTitle
+	DoGetVaultByUUIDFunc = getVaultByUUID
+	DoLoadStructFunc = loadStruct
+	DoLoadStructFromItemFunc = loadStructFromItem
+	DoLoadStructFromItemByUUIDFunc = loadStructFromItemByUUID
 }
 
 func getTestConfig() *logical.BackendConfig {
@@ -156,6 +169,58 @@ func getItemsByTitle(title, vaultUUID string) ([]onepassword.Item, error) {
 func deleteItem(item *onepassword.Item, vaultUUID string) error {
 	delete(Items, item.ID)
 	return nil
+}
+
+func deleteItemByID(itemUUID, vaultUUID string) error {
+	return fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func deleteItemByTitle(itemName, vaultUUID string) error {
+	return fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func downloadFile(file *onepassword.File, targetDirectory string, overwrite bool) (string, error) {
+	return "", fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func getFile(uuid string, itemQuery string, vaultQuery string) (*onepassword.File, error) {
+	return nil, fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func getFileContent(file *onepassword.File) ([]byte, error) {
+	return nil, fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func getFiles(itemQuery string, vaultQuery string) ([]onepassword.File, error) {
+	return nil, fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func getItemByUUID(uuid string, vaultQuery string) (*onepassword.Item, error) {
+	return nil, fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func getVault(uuid string) (*onepassword.Vault, error) {
+	return nil, fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func getVaultByTitle(title string) (*onepassword.Vault, error) {
+	return nil, fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func getVaultByUUID(uuid string) (*onepassword.Vault, error) {
+	return nil, fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func loadStruct(config interface{}) error {
+	return fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func loadStructFromItem(config interface{}, itemQuery string, vaultQuery string) error {
+	return fmt.Errorf("This method is currently not supported by the test client")
+}
+
+func loadStructFromItemByUUID(config interface{}, itemUUID string, vaultQuery string) error {
+	return fmt.Errorf("This method is currently not supported by the test client")
 }
 
 func listItems(vaultUUID string) ([]onepassword.Item, error) {
