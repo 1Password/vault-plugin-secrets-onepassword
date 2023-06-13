@@ -1,5 +1,5 @@
-# github.com/1Password/connect-sdk-go v1.0.1
-## explicit; go 1.15
+# github.com/1Password/connect-sdk-go v1.5.1
+## explicit; go 1.20
 github.com/1Password/connect-sdk-go/connect
 github.com/1Password/connect-sdk-go/onepassword
 # github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310
@@ -130,7 +130,7 @@ github.com/pkg/errors
 github.com/ryanuber/go-glob
 # github.com/stretchr/objx v0.1.1
 ## explicit
-# github.com/uber/jaeger-client-go v2.25.0+incompatible
+# github.com/uber/jaeger-client-go v2.30.0+incompatible
 ## explicit
 github.com/uber/jaeger-client-go
 github.com/uber/jaeger-client-go/config
@@ -151,11 +151,11 @@ github.com/uber/jaeger-client-go/thrift-gen/zipkincore
 github.com/uber/jaeger-client-go/transport
 github.com/uber/jaeger-client-go/utils
 github.com/uber/jaeger-client-go/zipkin
-# github.com/uber/jaeger-lib v2.4.0+incompatible
+# github.com/uber/jaeger-lib v2.4.1+incompatible
 ## explicit
 github.com/uber/jaeger-lib/metrics
-# go.uber.org/atomic v1.7.0
-## explicit; go 1.13
+# go.uber.org/atomic v1.10.0
+## explicit; go 1.18
 go.uber.org/atomic
 # golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 ## explicit; go 1.11

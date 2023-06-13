@@ -3,7 +3,7 @@ module github.com/1Password/vault-plugin-secrets-onepassword
 go 1.20
 
 require (
-	github.com/1Password/connect-sdk-go v1.0.1
+	github.com/1Password/connect-sdk-go v1.5.1
 	github.com/hashicorp/errwrap v1.0.0
 	github.com/hashicorp/go-hclog v0.9.2
 	github.com/hashicorp/vault/api v1.0.2
@@ -37,9 +37,9 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
 	github.com/stretchr/objx v0.1.1 // indirect
-	github.com/uber/jaeger-client-go v2.25.0+incompatible // indirect
-	github.com/uber/jaeger-lib v2.4.0+incompatible // indirect
-	go.uber.org/atomic v1.7.0 // indirect
+	github.com/uber/jaeger-client-go v2.30.0+incompatible // indirect
+	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
+	go.uber.org/atomic v1.10.0 // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
 	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f // indirect
