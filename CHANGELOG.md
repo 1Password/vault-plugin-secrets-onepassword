@@ -12,6 +12,20 @@
 
 ---
 
+[//]: # (START/v1.1.0)
+# v1.1.0
+
+## Features
+  * Upgraded Connect SDK to 1.5.1.
+  * Upgrade go version to 1.20.
+
+## Fixes
+ * Improved sanitization for use with Github Actions.
+
+## Security
+ * Updated dependencies with known vulnerabilities to patched versions.
+---
+
 [//]: # (START/v1.0.0)
 # v1.0.0
 
