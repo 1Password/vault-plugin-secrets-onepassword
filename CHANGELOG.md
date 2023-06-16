@@ -17,7 +17,7 @@
 
 ## Features
   * Upgraded Connect SDK to 1.5.1.
-  * Upgrade go version to 1.20.
+  * Upgraded go version to 1.20.
 
 ## Fixes
  * Improved sanitization for use with Github Actions.
