@@ -329,11 +329,11 @@ See [1Password Connect Server API Reference](https://developer.1password.com/doc
 }
 ```
 
-## Vault Enterprise namespaces
+## Vault Enterprise Namespaces
 
-The 1Password secrets engine supports Vault Enterprise namespaces (see [Vault Enterprise Namespaces](https://developer.hashicorp.com/vault/docs/enterprise/namespaces) for more information). If you are using namespaces, the secrets engine must be enabled for each namespace.
+The 1Password secrets engine supports [Vault Enterprise Namespaces](https://developer.hashicorp.com/vault/docs/enterprise/namespaces). If you are using namespaces, the secrets engine must be enabled for each namespace.
 
-Use `-namespace` to enable the plugin for each namespace. For example:
+You can use `-namespace` to enable the plugin for each namespace. For example:
 
 ```sh
 vault secrets enable -namespace=ns_example op
@@ -347,7 +347,7 @@ vault write -namespace=ns_example op/config \
   op_connect_token=$OP_CONNECT_TOKEN
 ```
 
-Or, create a file for the configuration and write the contents to the path (see [Enable and configure the plugin](#enable-and-configure-the-plugin) above for an example file):
+Alternatively, you can also create a file for the configuration and write the contents to the path (see [Enable and configure the plugin](#enable-and-configure-the-plugin) above for an example file):
 
 ```sh
 vault write -namespace=ns_example op/config @op-connect-config.json
