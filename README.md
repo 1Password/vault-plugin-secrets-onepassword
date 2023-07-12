@@ -5,7 +5,7 @@ This is a [custom secrets engine](https://developer.hashicorp.com/vault/tutorial
 ## Prerequisites
 
 - A basic understanding of [HashiCorp Vault](https://www.hashicorp.com/products/vault) (see [What is Vault?](https://developer.hashicorp.com/vault/docs/what-is-vault))
-- A HashiCorp Vault server (see [Installing Vault](https://developer.hashicorp.com/vault/docs/install))  
+- A HashiCorp Vault server (see [Installing Vault](https://developer.hashicorp.com/vault/docs/install))
   > **Note**
   >
   > This guide also includes [quick start instructions](#quick-start-for-evaluation) for running a Vault server in dev mode to evaluate this plugin.
@@ -142,8 +142,8 @@ Or, create a JSON file with your 1Password Connect Server details. For example, 
 
 ```json
 {
-    "op_connect_host": "https://op-connect.example.com:8443/",
-    "op_connect_token": "your_access_token"
+	"op_connect_host": "https://op-connect.example.com:8443/",
+	"op_connect_token": "your_access_token"
 }
 ```
 
@@ -240,40 +240,40 @@ See [1Password Connect Server API Reference](https://developer.1password.com/doc
 
 ```json
 {
-    "category": "login",
-    "title": "Example Login",
-    "fields": [
-        {
-            "id": "username",
-            "label": "username",
-            "type": "STRING",
-            "purpose": "USERNAME",
-            "value": "my_user"
-        },
-        {
-            "id": "password",
-            "label": "password",
-            "purpose": "PASSWORD",
-            "type": "CONCEALED",
-            "value": "",
-            "generate": true
-        },
-        {
-            "id": "custom_field_id",
-            "type": "STRING",
-            "label": "My Custom Field",
-            "value": "my custom value",
-            "section": {
-                "id": "my_new_section"
-            }
-        }
-    ],
-    "sections": [
-        {
-            "id": "my_new_section",
-            "label": "New Section"
-        }
-    ]
+	"category": "login",
+	"title": "Example Login",
+	"fields": [
+		{
+			"id": "username",
+			"label": "username",
+			"type": "STRING",
+			"purpose": "USERNAME",
+			"value": "my_user"
+		},
+		{
+			"id": "password",
+			"label": "password",
+			"purpose": "PASSWORD",
+			"type": "CONCEALED",
+			"value": "",
+			"generate": true
+		},
+		{
+			"id": "custom_field_id",
+			"type": "STRING",
+			"label": "My Custom Field",
+			"value": "my custom value",
+			"section": {
+				"id": "my_new_section"
+			}
+		}
+	],
+	"sections": [
+		{
+			"id": "my_new_section",
+			"label": "New Section"
+		}
+	]
 }
 ```
 
@@ -281,18 +281,18 @@ See [1Password Connect Server API Reference](https://developer.1password.com/doc
 
 ```json
 {
-    "category": "password",
-    "title": "Example Password",
-    "fields": [
-        {
-            "id": "password",
-            "label": "password",
-            "purpose": "PASSWORD",
-            "type": "CONCEALED",
-            "value": "",
-            "generate": true
-        }
-    ]
+	"category": "password",
+	"title": "Example Password",
+	"fields": [
+		{
+			"id": "password",
+			"label": "password",
+			"purpose": "PASSWORD",
+			"type": "CONCEALED",
+			"value": "",
+			"generate": true
+		}
+	]
 }
 ```
 
@@ -300,43 +300,43 @@ See [1Password Connect Server API Reference](https://developer.1password.com/doc
 
 ```json
 {
-    "category": "database",
-    "title": "Example Database",
-    "fields": [
-        {
-          "id": "username",
-          "label": "username",
-          "type": "STRING",
-          "purpose": "USERNAME",
-          "value": "my_user"
-        },
-        {
-          "id": "password",
-          "label": "password",
-          "purpose": "PASSWORD",
-          "type": "CONCEALED",
-          "value": "",
-          "generate": true
-        },
-        {
-          "id": "hostname",
-          "label": "hostname",
-          "type": "STRING",
-          "value": "my_host"
-        },
-        {
-          "id": "database",
-          "label": "database",
-          "type": "STRING",
-          "value": "my_database"
-        },
-        {
-          "id": "port",
-          "label": "port",
-          "type": "STRING",
-          "value": "8080"
-        }
-    ]
+	"category": "database",
+	"title": "Example Database",
+	"fields": [
+		{
+			"id": "username",
+			"label": "username",
+			"type": "STRING",
+			"purpose": "USERNAME",
+			"value": "my_user"
+		},
+		{
+			"id": "password",
+			"label": "password",
+			"purpose": "PASSWORD",
+			"type": "CONCEALED",
+			"value": "",
+			"generate": true
+		},
+		{
+			"id": "hostname",
+			"label": "hostname",
+			"type": "STRING",
+			"value": "my_host"
+		},
+		{
+			"id": "database",
+			"label": "database",
+			"type": "STRING",
+			"value": "my_database"
+		},
+		{
+			"id": "port",
+			"label": "port",
+			"type": "STRING",
+			"value": "8080"
+		}
+	]
 }
 ```
 
@@ -372,10 +372,11 @@ vault write -namespace=ns_example op/config @op-connect-config.json
 make test
 ```
 
-## Security
+## 🔐 Security
 
 1Password requests you practice responsible disclosure if you discover a vulnerability.
 
-Please file requests via [BugCrowd](https://bugcrowd.com/agilebits).
+Please file requests via [**BugCrowd**](https://bugcrowd.com/agilebits).
 
-For information about the security of 1Password Connect Server, see [About 1Password Connect Server security](https://developer.1password.com/docs/connect/connect-security/).
+- For information about security practices, please visit the [1Password Bug Bounty Program](https://bugcrowd.com/agilebits).
+- For information about the security of 1Password Connect Server, see [About 1Password Connect Server security](https://developer.1password.com/docs/connect/connect-security/).
