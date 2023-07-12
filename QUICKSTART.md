@@ -150,19 +150,15 @@ vault write op/config @op-connect-config.json
 
 ### Environment variables
 
-- `OP_CONNECT_TOKEN`: (required if `op_connect_token` is not set in configuration): The API token created to be used to connect with the 1Password Connect API.
+- `OP_CONNECT_TOKEN`: (required if `op_connect_token` is not set in configuration): The API token used to authenticate with the 1Password Connect API.
 
 ### Commands
 
-> **Note**
->
-> When specipfying vault name or item title in the path, if multiple 1Password vaults or items have the same respective
-> name or title, the action will be performed on the _oldest_ vault or item. Item titles or vault names that include
-> white space characters **cannot** be used (use UUID instead).
+> **Note:** When specifying the 1Password vault name or item title in the path, if multiple vaults or items have the same respective name or title, the action will be performed on the _oldest_ vault or item. Item titles or vault names that include white space characters **cannot** be used (you can reference them using UUID instead).
 
 #### List vaults
 
-Returns vault name and UUID for vaults accessible by the configured Connect access token:
+Returns the names and UUIDs for the vault(s) that are accessible to the Connect access token:
 
 ```sh
 vault list op/vaults
@@ -170,7 +166,7 @@ vault list op/vaults
 
 #### List items
 
-Returns item title and UUID for items stored in the specified 1Password vault:
+Returns the title and UUID for items stored in the specified 1Password vault:
 
 ```sh
 vault list op/vaults/<vault_name_or_uuid>
@@ -178,7 +174,7 @@ vault list op/vaults/<vault_name_or_uuid>
 
 #### Read item
 
-Returns item data for the specified item:
+Returns the data for the specified item:
 
 ```sh
 vault read op/vaults/<vault_name_or_uuid>/items/<item_title_or_uuid>
@@ -194,21 +190,21 @@ vault write op/vaults/<vault_name_or_uuid>/items @some_json_file.json
 
 #### Update item
 
-Update a specified item using a JSON file (see [Details for creating and updating items](#details-for-creating-and-updating-items) for more information on the JSON schema):
+Update the specified item using a JSON file (see [Details for creating and updating items](#details-for-creating-and-updating-items) for more information on the JSON schema):
 
 ```sh
-vault write op/vaults/<vault_id_or_name>/items/<item_title_or_uuid> @some_json_file.json
+vault write op/vaults/<vault_name_or_uuid>/items/<item_title_or_uuid> @some_json_file.json
 ```
 
 #### Delete item
 
-Delete a specific item:
+Delete the specified item:
 
 ```sh
-vault delete op/vaults/<vault_id_or_name>/items/<item_title_or_uuid>
+vault delete op/vaults/<vault_name_or_uuid>/items/<item_title_or_uuid>
 ```
 
-### Details for creating and updating items
+#### Details for creating and updating items
 
 See [1Password Connect Server API Reference](https://developer.1password.com/docs/connect/connect-api-reference) for more details:
 
@@ -227,7 +223,7 @@ See [1Password Connect Server API Reference](https://developer.1password.com/doc
     - `id`: the ID of the section
 - `sections`: an array of sections to create for the item; each section can be described with the following:
   - `id`: an ID for the section
-  - `label`: How the section will be titled in the UI
+  - `label`: how the section will be titled in the UI
 
 #### Example Login item with custom section
 
