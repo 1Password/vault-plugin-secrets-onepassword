@@ -21,9 +21,14 @@ vault server -dev -dev-root-token-id=root -dev-plugin-dir=./vault/plugins -log-l
 
 Connect to the Vault server in a **new** terminal to [enable the secrets engine](#enable-and-configure-the-plugin) and start using it.
 
-## Getting started: Get or build the plugin binary
+## Getting started
 
-Download [the release for your HashiCorp Vault server's architecture](https://github.com/1Password/vault-plugin-secrets-onepassword/releases), extract the binary, and move it to the [plugin directory](https://developer.hashicorp.com/vault/docs/plugins/plugin-architecture#plugin-directory) for your Vault server. For example, for a Vault server running on an AMD64 Linux machine:
+### Download the binary
+
+1. Download [the release for your HashiCorp Vault server's architecture](https://github.com/1Password/vault-plugin-secrets-onepassword/releases).
+1. Extract the binary and move it to the [plugin directory](https://developer.hashicorp.com/vault/docs/plugins/plugin-architecture#plugin-directory) for your Vault server.
+
+Example for a Vault server running on a Linux machine with AMD64 architecture:
 
 ```sh
 # Download the AMD64 release for Linux
@@ -36,7 +41,9 @@ mkdir -p ./vault/plugins
 mv ./vault-plugin-secrets-onepassword_v1.0.0 ./vault/plugins/op-connect
 ```
 
-Or, you can build the plugin from source. For example:
+### Build the binary
+
+Alternatively, you can also build the plugin binary from source:
 
 ```sh
 # Clone this repository
