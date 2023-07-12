@@ -17,7 +17,7 @@ You can start HashiCorp Vault server in [development mode](https://developer.has
 vault server -dev -dev-root-token-id=root -dev-plugin-dir=./vault/plugins -log-level=debug
 ```
 
-> **Warning:** Running Vault in devlopment mode is useful for evaluating the plugin, but should **never** be used in production.
+> **Warning:** Running Vault in development mode is useful for evaluating the plugin, but should **never** be used in production.
 
 Connect to the Vault server in a **new** terminal to [enable the secrets engine](#enable-and-configure-the-plugin) and start using it.
 
@@ -56,7 +56,7 @@ go build -o ../vault/plugins/op-connect -C ./vault-plugin-secrets-onepassword ./
 
 ### Configure and start the Vault server
 
-Write out the [configuration file](https://developer.hashicorp.com/vault/docs/configuration) for the Vault server. For example:
+Write the [configuration file](https://developer.hashicorp.com/vault/docs/configuration) for the Vault server. For example:
 
 ```sh
 cat > ./vault/server.hcl << EOF
@@ -72,12 +72,7 @@ listener "tcp" {
 EOF
 ```
 
-> **Note**
->
-> You must set [`plugin_directory`](https://developer.hashicorp.com/vault/docs/configuration#plugin_directory) to point
-> to the folder with your custom secrets engine and
-> [`api_addr`](https://developer.hashicorp.com/vault/docs/configuration#api_addr) for the plugin to communicate with
-> Vault. The Vault instance stores everything in memory and runs locally.
+> **Note:** You must set [`plugin_directory`](https://developer.hashicorp.com/vault/docs/configuration#plugin_directory) to point to the folder with your custom secrets engine and [`api_addr`](https://developer.hashicorp.com/vault/docs/configuration#api_addr) for the plugin to communicate with Vault. The Vault instance stores everything in memory and runs locally.
 
 Start the Vault server with this configuration file:
 
@@ -85,7 +80,7 @@ Start the Vault server with this configuration file:
 vault server -config=./vault/server.hcl
 ```
 
-Connect to the Vault server in a **new** terminal.
+Finally, connect to the Vault server in a **new** terminal.
 
 ### Register the plugin to Vault
 
@@ -100,7 +95,7 @@ vault operator init
 vault operator unseal
 ```
 
-Calculate the SHA256 checksum of the plugin binary. For example, on Linux:
+Next, calculate the SHA256 checksum of the plugin binary. For example, on Linux:
 
 ```sh
 SHA256_CHECKSUM=$(sha256sum ./vault/plugins/op-connect | cut -d ' ' -f1)
@@ -112,13 +107,13 @@ Or, on macOS:
 SHA256_CHECKSUM=$(shasum -a 256 .vault/plugins/op-connect | cut -d ' ' -f1)
 ```
 
-Register the plugin to the catalog for the Vault server:
+Next, register the plugin to the catalog for the Vault server:
 
 ```sh
 vault plugin register -sha256=$SHA256_CHECKSUM secret op-connect
 ```
 
-## Enable and configure the plugin
+### Enable and configure the plugin
 
 Enable the `op-connect` secrets engine at the `op/` path:
 
@@ -126,12 +121,9 @@ Enable the `op-connect` secrets engine at the `op/` path:
 vault secrets enable --path="op" op-connect
 ```
 
-> **Note**
->
-> You will need to provide the URL for your 1Password Connect Server and your Connect access token for the next
-> step(s).
+> **Note:** You will need to provide the URL for your 1Password Connect server and your Connect access token for the next steps.
 
-Write the configuration data to access your Connect server to `op/config` in a single commmand (assuming the `OP_CONNECT_` variables have been set):
+Write the configuration data to access your Connect server to `op/config` in a single command (assuming the `OP_CONNECT_` environment variables have been set):
 
 ```sh
 vault write op/config \
@@ -139,7 +131,7 @@ vault write op/config \
   op_connect_token=$OP_CONNECT_TOKEN
 ```
 
-Or, create a JSON file with your 1Password Connect Server details. For example, save the following as `op-connect-config.json`:
+Alternatively, create a JSON file with your 1Password Connect server details. For example, save the following as `op-connect-config.json`:
 
 ```json
 {
@@ -148,7 +140,7 @@ Or, create a JSON file with your 1Password Connect Server details. For example, 
 }
 ```
 
-Write the data to the `op/config` path using this file to configure the secrets engine to access 1Password Connect Server.
+Write the data to the `op/config` path using this file to configure the secrets engine to access 1Password Connect server.
 
 ```sh
 vault write op/config @op-connect-config.json
