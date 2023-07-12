@@ -12,6 +12,10 @@
 
 This plugin uses the [1Password Connect API](https://developer.1password.com/docs/connect/connect-api-reference/) to allow HashiCorp Vault to interact with 1Password items via a [1Password Connect server](https://developer.1password.com/docs/connect).
 
+## ✨ Get started
+
+Refer to [QUICKSTART.md](/QUICKSTART.md) for instructions on how to start using this plugin.
+
 ## 💙 Community & Support
 
 - File an [issue](https://github.com/1Password/vault-plugin-secrets-onepassword/issues) for bugs and feature requests.
