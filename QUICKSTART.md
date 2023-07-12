@@ -2,14 +2,24 @@
 
 ## Prerequisites
 
-- A basic understanding of [HashiCorp Vault](https://www.hashicorp.com/products/vault) (see [What is Vault?](https://developer.hashicorp.com/vault/docs/what-is-vault))
-- A HashiCorp Vault server (see [Installing Vault](https://developer.hashicorp.com/vault/docs/install))
-  > **Note**
-  >
-  > This guide also includes [quick start instructions](#quick-start-for-evaluation) for running a Vault server in dev mode to evaluate this plugin.
-- HashiCorp Vault CLI installed on your device (see [Install Vault](https://developer.hashicorp.com/vault/downloads))
-- 1Password Connect Server deployed on your infrastructure (see [Get started with a 1Password Secrets Automation workflow](https://developer.1password.com/docs/connect/get-started))
-- [Go](https://go.dev/doc/install) (if you want to build the plugin from source)
+- A basic understanding of [HashiCorp Vault](https://www.hashicorp.com/products/vault) (see [What is Vault?](https://developer.hashicorp.com/vault/docs/what-is-vault) for details).
+- A [HashiCorp Vault server](https://developer.hashicorp.com/vault/docs/install).
+  - **Note:** This guide also includes [quick start instructions](#quick-start-for-evaluation) for running a Vault server in development mode if you'd like to evaluate this plugin before starting to use it.
+- The [HashiCorp Vault CLI](https://developer.hashicorp.com/vault/downloads) installed on your device.
+- A [1Password Connect server](https://developer.1password.com/docs/connect/get-started/) deployed on your infrastructure.
+- [Go](https://go.dev/doc/install) (if you want to build the plugin from source).
+
+## Quick start (for evaluation)
+
+You can start HashiCorp Vault server in [development mode](https://developer.hashicorp.com/vault/docs/concepts/dev-server) to demonstrate and evaluate the 1Password secrets engine. Vault starts unsealed in this configuration, and you do not need to register the plugin.
+
+```sh
+vault server -dev -dev-root-token-id=root -dev-plugin-dir=./vault/plugins -log-level=debug
+```
+
+> **Warning:** Running Vault in devlopment mode is useful for evaluating the plugin, but should **never** be used in production.
+
+Connect to the Vault server in a **new** terminal to [enable the secrets engine](#enable-and-configure-the-plugin) and start using it.
 
 ## Getting started: Get or build the plugin binary
 
@@ -34,20 +44,6 @@ git clone https://github.com/1Password/vault-plugin-secrets-onepassword.git
 # Build the binary
 go build -o ../vault/plugins/op-connect -C ./vault-plugin-secrets-onepassword ./main.go
 ```
-
-## Quick start (for evaluation)
-
-You can start HashiCorp Vault server in [development mode](https://developer.hashicorp.com/vault/docs/concepts/dev-server) to demonstrate and evaluate the 1Password secrets engine. In this configuration, Vault starts unsealed, and you do not need to register the plugin.
-
-```sh
-vault server -dev -dev-root-token-id=root -dev-plugin-dir=./vault/plugins -log-level=debug
-```
-
-> **Warning**
->
-> Running Vault in devlopment mode is useful for evaluating the plugin, but should **not** be used in production.
-
-Connect to the Vault server in a **new** terminal to [enable the secrets engine](#enable-and-configure-the-plugin) and use it.
 
 ## Full installation
 
