@@ -1,3 +1,6 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package logical
 
 import (
@@ -7,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/errwrap"
+	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/vault/sdk/helper/jsonutil"
 )
 
@@ -18,6 +22,11 @@ var ErrReadOnly = errors.New("cannot write to readonly storage")
 // ErrSetupReadOnly is returned when a write operation is attempted on a
 // storage while the backend is still being setup.
 var ErrSetupReadOnly = errors.New("cannot write to storage during setup")
+
+// Plugins using Paths.WriteForwardedStorage will need to use this sentinel
+// in their path to write cross-cluster. See the description of that parameter
+// for more information.
+const PBPWFClusterSentinel = "{{clusterId}}"
 
 // Storage is the way that logical backends are able read/write data.
 type Storage interface {
@@ -73,6 +82,10 @@ func ScanView(ctx context.Context, view ClearableView, cb func(path string)) err
 
 		// Handle the contents in the directory
 		for _, c := range contents {
+			// Exit if the context has been canceled
+			if ctx.Err() != nil {
+				return ctx.Err()
+			}
 			fullPath := current + c
 			if strings.HasSuffix(c, "/") {
 				frontier = append(frontier, fullPath)
@@ -108,8 +121,16 @@ func CollectKeysWithPrefix(ctx context.Context, view ClearableView, prefix strin
 
 // ClearView is used to delete all the keys in a view
 func ClearView(ctx context.Context, view ClearableView) error {
+	return ClearViewWithLogging(ctx, view, nil)
+}
+
+func ClearViewWithLogging(ctx context.Context, view ClearableView, logger hclog.Logger) error {
 	if view == nil {
 		return nil
+	}
+
+	if logger == nil {
+		logger = hclog.NewNullLogger()
 	}
 
 	// Collect all the keys
@@ -118,11 +139,28 @@ func ClearView(ctx context.Context, view ClearableView) error {
 		return err
 	}
 
+	logger.Debug("clearing view", "total_keys", len(keys))
+
 	// Delete all the keys
-	for _, key := range keys {
+	var pctDone int
+	for idx, key := range keys {
+		// Rather than keep trying to do stuff with a canceled context, bail;
+		// storage will fail anyways
+		if ctx.Err() != nil {
+			return ctx.Err()
+		}
 		if err := view.Delete(ctx, key); err != nil {
 			return err
 		}
+
+		newPctDone := idx * 100.0 / len(keys)
+		if int(newPctDone) > pctDone {
+			pctDone = int(newPctDone)
+			logger.Trace("view deletion progress", "percent", pctDone, "keys_deleted", idx)
+		}
 	}
+
+	logger.Debug("view cleared")
+
 	return nil
 }

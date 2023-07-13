@@ -1,10 +1,13 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package logical
 
 type LogInput struct {
 	Type                string
 	Auth                *Auth
-	Request             interface{}
-	Response            interface{}
+	Request             *Request
+	Response            *Response
 	OuterErr            error
 	NonHMACReqDataKeys  []string
 	NonHMACRespDataKeys []string

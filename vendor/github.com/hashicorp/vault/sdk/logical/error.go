@@ -1,3 +1,6 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package logical
 
 import "errors"
@@ -17,6 +20,11 @@ var (
 	// ErrPermissionDenied is returned if the client is not authorized
 	ErrPermissionDenied = errors.New("permission denied")
 
+	// ErrInvalidCredentials is returned when the provided credentials are incorrect
+	// This is used internally for user lockout purposes. This is not seen externally.
+	// The status code returned does not change because of this error
+	ErrInvalidCredentials = errors.New("invalid credentials")
+
 	// ErrMultiAuthzPending is returned if the the request needs more
 	// authorizations
 	ErrMultiAuthzPending = errors.New("request needs further approval")
@@ -28,6 +36,29 @@ var (
 	// ErrPerfStandbyForward is returned when Vault is in a state such that a
 	// perf standby cannot satisfy a request
 	ErrPerfStandbyPleaseForward = errors.New("please forward to the active node")
+
+	// ErrLeaseCountQuotaExceeded is returned when a request is rejected due to a lease
+	// count quota being exceeded.
+	ErrLeaseCountQuotaExceeded = errors.New("lease count quota exceeded")
+
+	// ErrRateLimitQuotaExceeded is returned when a request is rejected due to a
+	// rate limit quota being exceeded.
+	ErrRateLimitQuotaExceeded = errors.New("rate limit quota exceeded")
+
+	// ErrUnrecoverable is returned when a request fails due to something that
+	// is likely to require manual intervention. This is a generic form of an
+	// unrecoverable error.
+	// e.g.: misconfigured or disconnected storage backend.
+	ErrUnrecoverable = errors.New("unrecoverable error")
+
+	// ErrMissingRequiredState is returned when a request can't be satisfied
+	// with the data in the local node's storage, based on the provided
+	// X-Vault-Index request header.
+	ErrMissingRequiredState = errors.New("required index state not present")
+
+	// Error indicating that the requested path used to serve a purpose in older
+	// versions, but the functionality has now been removed
+	ErrPathFunctionalityRemoved = errors.New("functionality on this path has been removed")
 )
 
 type HTTPCodedError interface {

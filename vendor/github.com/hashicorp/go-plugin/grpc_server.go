@@ -1,3 +1,6 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package plugin
 
 import (
@@ -14,6 +17,7 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
 	"google.golang.org/grpc/health/grpc_health_v1"
+	"google.golang.org/grpc/reflection"
 )
 
 // GRPCServiceName is the name of the service that the health check should
@@ -51,9 +55,10 @@ type GRPCServer struct {
 	Stdout io.Reader
 	Stderr io.Reader
 
-	config GRPCServerConfig
-	server *grpc.Server
-	broker *GRPCBroker
+	config      GRPCServerConfig
+	server      *grpc.Server
+	broker      *GRPCBroker
+	stdioServer *grpcStdioServer
 
 	logger hclog.Logger
 }
@@ -73,6 +78,9 @@ func (s *GRPCServer) Init() error {
 		GRPCServiceName, grpc_health_v1.HealthCheckResponse_SERVING)
 	grpc_health_v1.RegisterHealthServer(s.server, healthCheck)
 
+	// Register the reflection service
+	reflection.Register(s.server)
+
 	// Register the broker service
 	brokerServer := newGRPCBrokerServer()
 	plugin.RegisterGRPCBrokerServer(s.server, brokerServer)
@@ -80,10 +88,12 @@ func (s *GRPCServer) Init() error {
 	go s.broker.Run()
 
 	// Register the controller
-	controllerServer := &grpcControllerServer{
-		server: s,
-	}
+	controllerServer := &grpcControllerServer{server: s}
 	plugin.RegisterGRPCControllerServer(s.server, controllerServer)
+
+	// Register the stdio service
+	s.stdioServer = newGRPCStdioServer(s.logger, s.Stdout, s.Stderr)
+	plugin.RegisterGRPCStdioServer(s.server, s.stdioServer)
 
 	// Register all our plugins onto the gRPC server.
 	for k, raw := range s.Plugins {
@@ -100,14 +110,26 @@ func (s *GRPCServer) Init() error {
 	return nil
 }
 
-// Stop calls Stop on the underlying grpc.Server
+// Stop calls Stop on the underlying grpc.Server and Close on the underlying
+// grpc.Broker if present.
 func (s *GRPCServer) Stop() {
 	s.server.Stop()
+
+	if s.broker != nil {
+		s.broker.Close()
+		s.broker = nil
+	}
 }
 
-// GracefulStop calls GracefulStop on the underlying grpc.Server
+// GracefulStop calls GracefulStop on the underlying grpc.Server and Close on
+// the underlying grpc.Broker if present.
 func (s *GRPCServer) GracefulStop() {
 	s.server.GracefulStop()
+
+	if s.broker != nil {
+		s.broker.Close()
+		s.broker = nil
+	}
 }
 
 // Config is the GRPCServerConfig encoded as JSON then base64.

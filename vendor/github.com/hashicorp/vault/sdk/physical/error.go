@@ -1,9 +1,13 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package physical
 
 import (
 	"context"
 	"errors"
 	"math/rand"
+	"sync"
 	"time"
 
 	log "github.com/hashicorp/go-hclog"
@@ -18,6 +22,7 @@ const (
 type ErrorInjector struct {
 	backend      Backend
 	errorPercent int
+	randomLock   *sync.Mutex
 	random       *rand.Rand
 }
 
@@ -29,8 +34,10 @@ type TransactionalErrorInjector struct {
 }
 
 // Verify ErrorInjector satisfies the correct interfaces
-var _ Backend = (*ErrorInjector)(nil)
-var _ Transactional = (*TransactionalErrorInjector)(nil)
+var (
+	_ Backend       = (*ErrorInjector)(nil)
+	_ Transactional = (*TransactionalErrorInjector)(nil)
+)
 
 // NewErrorInjector returns a wrapped physical backend to inject error
 func NewErrorInjector(b Backend, errorPercent int, logger log.Logger) *ErrorInjector {
@@ -42,6 +49,7 @@ func NewErrorInjector(b Backend, errorPercent int, logger log.Logger) *ErrorInje
 	return &ErrorInjector{
 		backend:      b,
 		errorPercent: errorPercent,
+		randomLock:   new(sync.Mutex),
 		random:       rand.New(rand.NewSource(int64(time.Now().Nanosecond()))),
 	}
 }
@@ -59,7 +67,9 @@ func (e *ErrorInjector) SetErrorPercentage(p int) {
 }
 
 func (e *ErrorInjector) addError() error {
+	e.randomLock.Lock()
 	roll := e.random.Intn(100)
+	e.randomLock.Unlock()
 	if roll < e.errorPercent {
 		return errors.New("random error")
 	}

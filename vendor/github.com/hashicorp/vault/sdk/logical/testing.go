@@ -1,3 +1,6 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package logical
 
 import (
@@ -14,10 +17,11 @@ import (
 // TestRequest is a helper to create a purely in-memory Request struct.
 func TestRequest(t testing.T, op Operation, path string) *Request {
 	return &Request{
-		Operation: op,
-		Path:      path,
-		Data:      make(map[string]interface{}),
-		Storage:   new(InmemStorage),
+		Operation:  op,
+		Path:       path,
+		Data:       make(map[string]interface{}),
+		Storage:    new(InmemStorage),
+		Connection: &Connection{},
 	}
 }
 
@@ -72,6 +76,7 @@ func TestSystemView() *StaticSystemView {
 	return &StaticSystemView{
 		DefaultLeaseTTLVal: defaultLeaseTTLVal,
 		MaxLeaseTTLVal:     maxLeaseTTLVal,
+		VersionString:      "testVersionString",
 	}
 }
 
@@ -79,6 +84,7 @@ func TestBackendConfig() *BackendConfig {
 	bc := &BackendConfig{
 		Logger: logging.NewVaultLogger(log.Trace),
 		System: TestSystemView(),
+		Config: make(map[string]string),
 	}
 
 	return bc
