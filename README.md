@@ -3,7 +3,7 @@
 <div align="center">
   <h1>1Password Secrets Engine for HashiCorp Vault</h1>
   <p><a href="https://developer.hashicorp.com/vault/tutorials/custom-secrets-engine">Custom secrets engine</a> for <a href="https://www.github.com/hashicorp/vault" >HashiCorp Vault</a>.</p>
-  <a href="#-get-started">
+  <a href="QUICKSTART.md">
     <img alt="Get started" src="https://user-images.githubusercontent.com/45081667/226940040-16d3684b-60f4-4d95-adb2-5757a8f1bc15.png" height="37"/>
   </a>
 </div>
