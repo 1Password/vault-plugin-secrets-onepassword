@@ -28,17 +28,15 @@ Connect to the Vault server in a **new** terminal to [enable the secrets engine]
 1. Download [the release for your HashiCorp Vault server's architecture](https://github.com/1Password/vault-plugin-secrets-onepassword/releases).
 1. Extract the binary and move it to the [plugin directory](https://developer.hashicorp.com/vault/docs/plugins/plugin-architecture#plugin-directory) for your Vault server.
 
-Example for a Vault server running on a Linux machine with AMD64 architecture:
+Example for a Vault server running on a Linux machine with AMD64 architecture (note that you may need to update the filename depending on which OS and architecture you're using):
 
 ```sh
-# Download the AMD64 release for Linux
-wget https://github.com/1Password/vault-plugin-secrets-onepassword/releases/download/v1.0.0/vault-plugin-secrets-onepassword_1.0.0_linux_amd64.zip
 # Unzip the release archive
-unzip ./vault-plugin-secrets-onepassword_1.0.0_linux_amd64.zip
+unzip ./vault-plugin-secrets-onepassword_1.1.0_linux_amd64.zip
 # Create a plugin directory
 mkdir -p ./vault/plugins
 # Move the binary to the plugin directory and rename to op-connect
-mv ./vault-plugin-secrets-onepassword_v1.0.0 ./vault/plugins/op-connect
+mv ./vault-plugin-secrets-onepassword_v1.1.0 ./vault/plugins/op-connect
 ```
 
 ### Build the binary
