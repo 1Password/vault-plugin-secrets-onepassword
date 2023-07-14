@@ -1,3 +1,6 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package plugin
 
 import (
@@ -7,9 +10,9 @@ import (
 	"net"
 	"net/rpc"
 
-	"github.com/mitchellh/go-testing-interface"
 	hclog "github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin/internal/plugin"
+	"github.com/mitchellh/go-testing-interface"
 	"google.golang.org/grpc"
 )
 

@@ -1,3 +1,6 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package logical
 
 import (
@@ -60,6 +63,26 @@ func (s *InmemStorage) Underlying() *inmem.InmemBackend {
 	s.once.Do(s.init)
 
 	return s.underlying.(*inmem.InmemBackend)
+}
+
+func (s *InmemStorage) FailPut(fail bool) *InmemStorage {
+	s.Underlying().FailPut(fail)
+	return s
+}
+
+func (s *InmemStorage) FailGet(fail bool) *InmemStorage {
+	s.Underlying().FailGet(fail)
+	return s
+}
+
+func (s *InmemStorage) FailDelete(fail bool) *InmemStorage {
+	s.Underlying().FailDelete(fail)
+	return s
+}
+
+func (s *InmemStorage) FailList(fail bool) *InmemStorage {
+	s.Underlying().FailList(fail)
+	return s
 }
 
 func (s *InmemStorage) init() {

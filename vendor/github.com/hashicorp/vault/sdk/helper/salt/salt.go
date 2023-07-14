@@ -1,3 +1,6 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package salt
 
 import (
@@ -115,6 +118,23 @@ func NewSalt(ctx context.Context, view logical.Storage, config *Config) (*Salt, 
 	return s, nil
 }
 
+// NewNonpersistentSalt creates a new salt with default configuration and no storage usage.
+func NewNonpersistentSalt() *Salt {
+	// Setup the configuration
+	config := &Config{}
+	config.Location = ""
+	config.HashFunc = SHA256Hash
+	config.HMAC = sha256.New
+	config.HMACType = "hmac-sha256"
+
+	s := &Salt{
+		config: config,
+	}
+	s.salt, _ = uuid.GenerateUUID()
+	s.generated = true
+	return s
+}
+
 // SaltID is used to apply a salt and hash function to an ID to make sure
 // it is not reversible
 func (s *Salt) SaltID(id string) string {
@@ -135,8 +155,8 @@ func (s *Salt) GetIdentifiedHMAC(data string) string {
 	return s.config.HMACType + ":" + s.GetHMAC(data)
 }
 
-// DidGenerate returns if the underlying salt value was generated
-// on initialization or if an existing salt value was loaded
+// DidGenerate returns true if the underlying salt value was generated
+// on initialization.
 func (s *Salt) DidGenerate() bool {
 	return s.generated
 }
