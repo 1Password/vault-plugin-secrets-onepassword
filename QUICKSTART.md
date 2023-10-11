@@ -133,8 +133,8 @@ Alternatively, create a JSON file with your 1Password Connect server details. Fo
 
 ```json
 {
-	"op_connect_host": "https://op-connect.example.com:8443/",
-	"op_connect_token": "your_access_token"
+  "op_connect_host": "https://op-connect.example.com:8443/",
+  "op_connect_token": "your_access_token"
 }
 ```
 
@@ -167,7 +167,7 @@ vault list op/vaults
 Returns the title and UUID for items stored in the specified 1Password vault:
 
 ```sh
-vault list op/vaults/<vault_name_or_uuid>
+vault list op/vaults/<vault_name_or_uuid>/items
 ```
 
 #### Read item
@@ -227,40 +227,40 @@ See [1Password Connect Server API Reference](https://developer.1password.com/doc
 
 ```json
 {
-	"category": "login",
-	"title": "Example Login",
-	"fields": [
-		{
-			"id": "username",
-			"label": "username",
-			"type": "STRING",
-			"purpose": "USERNAME",
-			"value": "my_user"
-		},
-		{
-			"id": "password",
-			"label": "password",
-			"purpose": "PASSWORD",
-			"type": "CONCEALED",
-			"value": "",
-			"generate": true
-		},
-		{
-			"id": "custom_field_id",
-			"type": "STRING",
-			"label": "My Custom Field",
-			"value": "my custom value",
-			"section": {
-				"id": "my_new_section"
-			}
-		}
-	],
-	"sections": [
-		{
-			"id": "my_new_section",
-			"label": "New Section"
-		}
-	]
+  "category": "login",
+  "title": "Example Login",
+  "fields": [
+    {
+      "id": "username",
+      "label": "username",
+      "type": "STRING",
+      "purpose": "USERNAME",
+      "value": "my_user"
+    },
+    {
+      "id": "password",
+      "label": "password",
+      "purpose": "PASSWORD",
+      "type": "CONCEALED",
+      "value": "",
+      "generate": true
+    },
+    {
+      "id": "custom_field_id",
+      "type": "STRING",
+      "label": "My Custom Field",
+      "value": "my custom value",
+      "section": {
+        "id": "my_new_section"
+      }
+    }
+  ],
+  "sections": [
+    {
+      "id": "my_new_section",
+      "label": "New Section"
+    }
+  ]
 }
 ```
 
@@ -268,18 +268,18 @@ See [1Password Connect Server API Reference](https://developer.1password.com/doc
 
 ```json
 {
-	"category": "password",
-	"title": "Example Password",
-	"fields": [
-		{
-			"id": "password",
-			"label": "password",
-			"purpose": "PASSWORD",
-			"type": "CONCEALED",
-			"value": "",
-			"generate": true
-		}
-	]
+  "category": "password",
+  "title": "Example Password",
+  "fields": [
+    {
+      "id": "password",
+      "label": "password",
+      "purpose": "PASSWORD",
+      "type": "CONCEALED",
+      "value": "",
+      "generate": true
+    }
+  ]
 }
 ```
 
@@ -287,43 +287,43 @@ See [1Password Connect Server API Reference](https://developer.1password.com/doc
 
 ```json
 {
-	"category": "database",
-	"title": "Example Database",
-	"fields": [
-		{
-			"id": "username",
-			"label": "username",
-			"type": "STRING",
-			"purpose": "USERNAME",
-			"value": "my_user"
-		},
-		{
-			"id": "password",
-			"label": "password",
-			"purpose": "PASSWORD",
-			"type": "CONCEALED",
-			"value": "",
-			"generate": true
-		},
-		{
-			"id": "hostname",
-			"label": "hostname",
-			"type": "STRING",
-			"value": "my_host"
-		},
-		{
-			"id": "database",
-			"label": "database",
-			"type": "STRING",
-			"value": "my_database"
-		},
-		{
-			"id": "port",
-			"label": "port",
-			"type": "STRING",
-			"value": "8080"
-		}
-	]
+  "category": "database",
+  "title": "Example Database",
+  "fields": [
+    {
+      "id": "username",
+      "label": "username",
+      "type": "STRING",
+      "purpose": "USERNAME",
+      "value": "my_user"
+    },
+    {
+      "id": "password",
+      "label": "password",
+      "purpose": "PASSWORD",
+      "type": "CONCEALED",
+      "value": "",
+      "generate": true
+    },
+    {
+      "id": "hostname",
+      "label": "hostname",
+      "type": "STRING",
+      "value": "my_host"
+    },
+    {
+      "id": "database",
+      "label": "database",
+      "type": "STRING",
+      "value": "my_database"
+    },
+    {
+      "id": "port",
+      "label": "port",
+      "type": "STRING",
+      "value": "8080"
+    }
+  ]
 }
 ```
 
