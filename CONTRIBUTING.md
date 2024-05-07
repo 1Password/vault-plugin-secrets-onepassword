@@ -18,16 +18,6 @@ If applicable, update the [README.md](./README.md) to reflect any changes introd
 
 To get your PR merged, we require you to sign your commits.
 
-### Sign commits with 1Password
-
-You can also sign commits using 1Password, which lets you sign commits with biometrics without the signing key leaving the local 1Password process.
-
-Learn how to use [1Password to sign your commits](https://developer.1password.com/docs/ssh/git-commit-signing/).
-
-## Sign your commits
-
-To get your PR merged, we require you to sign your commits.
-
 ### Sign commits with `1Password`
 
 You can also sign commits using 1Password, which lets you sign commits with biometrics without the signing key leaving the local 1Password process.
