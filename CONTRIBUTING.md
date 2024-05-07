@@ -35,7 +35,7 @@ Follow the steps below to set up commit signing with `ssh-agent`:
 
 ### Sign commits `gpg`
 
-Follow the steps below to set up commit signing with `gpg`:
+Follow the steps below to set up commit signing with `gpg`
 
 1. Generate a GPG key
 2. Add the GPG key to your GitHub account
