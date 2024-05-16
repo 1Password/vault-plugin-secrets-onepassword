@@ -2,6 +2,15 @@
 
 Thanks for your interest in contributing to the 1Password vault-plugin-secrets-onepassword project! 🙌 We appreciate your time and effort. Here are some guidelines to help you get started.
 
+## Building
+Run the following command to build the 1Password vault-plugin-secrets-onepassword:
+
+```sh
+go build .
+```
+
+This will create the `vault-plugin-secrets-onepassword` binary.
+
 ## Testing
 
 To run the Go tests and check test coverage run the following command:
@@ -9,6 +18,17 @@ To run the Go tests and check test coverage run the following command:
 ```sh
 go test -v ./... -cover
 ```
+
+## Debugging
+
+### Start a debugging session
+Run the following command to start a Delve debugging session:
+
+```sh
+dlv debug . -- --debug
+```
+
+Or use your IDE debugger. You can configure editors like GoLand to start a debugging session by passing the `--debug` flag as a program argument.
 
 ## Documentation Updates
 
