@@ -42,7 +42,7 @@ Run the following command to build the binary without enabling optimizations:
 go build -o vault/plugins/op-connect -gcflags="all=-N -l" .
 ```
 
-### Start a debugging session
+#### Start a debugging session
 Run the following command to start a Delve debugging session:
 
 ```sh
