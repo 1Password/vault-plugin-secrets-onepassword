@@ -6,20 +6,41 @@ Thanks for your interest in contributing to the 1Password vault-plugin-secrets-o
 Run the following command to build the 1Password vault-plugin-secrets-onepassword:
 
 ```sh
-go build .
+make build 
 ```
-
-This will create the `vault-plugin-secrets-onepassword` binary.
+This will build into the vault/plugins/op-connect binary.
 
 ## Testing
-
-To run the Go tests and check test coverage run the following command:
+To demonstrate and evaluate the 1Password secrets engine, you can start HashiCorp Vault server in [development mode](https://developer.hashicorp.com/vault/docs/concepts/dev-server). The Vault server will be automatically initialized and unsealed in this configuration, and you do not need to register the plugin. 
 
 ```sh
-go test -v ./... -cover
+vault server -dev -dev-root-token-id=root -dev-plugin-dir=./vault/plugins -log-level=debug
+```
+> **Warning:** Running Vault in development mode is useful for evaluating the plugin, but should **never** be used in production.
+
+Connect to the Vault server in a **new** terminal to enable the secrets engine and start using it. For more information on how to enable and configure the plugin, follow the steps in the [QUICKSTART.md](./QUICKSTART.md)
+
+To run the Go tests run the following command:
+
+```sh
+make test
+```
+
+To include the test coverage run the following command:
+
+```sh
+make test/coverage
 ```
 
 ## Debugging
+
+#### Build the binary without optimizations
+
+Run the following command to build the binary without enabling optimizations:
+
+```sh
+go build -o vault/plugins/op-connect -gcflags="all=-N -l" .
+```
 
 ### Start a debugging session
 Run the following command to start a Delve debugging session:
@@ -27,8 +48,6 @@ Run the following command to start a Delve debugging session:
 ```sh
 dlv debug . -- --debug
 ```
-
-Or use your IDE debugger. You can configure editors like GoLand to start a debugging session by passing the `--debug` flag as a program argument.
 
 ## Documentation Updates
 
@@ -43,7 +62,6 @@ To get your PR merged, we require you to sign your commits.
 You can also sign commits using 1Password, which lets you sign commits with biometrics without the signing key leaving the local 1Password process.
 
 Learn how to use [1Password to sign your commits](https://developer.1password.com/docs/ssh/git-commit-signing/).
-
 
 ### Sign commits with `ssh-agent`
 
