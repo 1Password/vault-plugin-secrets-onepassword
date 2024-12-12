@@ -26,7 +26,6 @@ Refer to [QUICKSTART.md](/QUICKSTART.md) for instructions on how to start using 
 
 1Password requests you practice responsible disclosure if you discover a vulnerability.
 
-Please file requests via [**BugCrowd**](https://bugcrowd.com/agilebits).
+Please file requests by sending an email to bugbounty@agilebits.com.
 
-- For information about security practices, please visit the [1Password Bug Bounty Program](https://bugcrowd.com/agilebits).
-- For information about the security of 1Password Connect Server, see [About 1Password Connect Server security](https://developer.1password.com/docs/connect/connect-security/).
+For information about the security of 1Password Connect Server, see [About 1Password Connect Server security](https://developer.1password.com/docs/connect/connect-security/).
