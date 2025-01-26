@@ -22,7 +22,7 @@ PLUGIN_NAME = op-connect
 versionFile = $(CURDIR)/.VERSION
 curVersion := $(shell cat $(versionFile) | sed 's/^v//')
 
-all: fmt build start
+all: fmt gomod2nix build start
 
 test:	## Run test suite
 	go test ./...
@@ -30,6 +30,8 @@ test:	## Run test suite
 test/coverage:	## Run test suite with coverage report
 	go test -v ./... -cover
 
+gomod2nix:
+	gomod2nix generate
 
 build:	## Build 1Password secrets plugin for Vault
 	GOOS=$(OS) GOARCH="$(GOARCH)" go build -o vault/plugins/$(PLUGIN_NAME) .
