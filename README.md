@@ -29,3 +29,5 @@ Refer to [QUICKSTART.md](/QUICKSTART.md) for instructions on how to start using 
 Please file requests by sending an email to bugbounty@agilebits.com.
 
 For information about the security of 1Password Connect Server, see [About 1Password Connect Server security](https://developer.1password.com/docs/connect/connect-security/).
+
+*By accessing or using 1Password Developer Tools, you agree to the [API and SDK Terms of Service](https://1password.com/legal/api-sdk-terms-of-service).*
