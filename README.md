@@ -12,7 +12,7 @@
 
 This plugin uses the [1Password Connect API](https://developer.1password.com/docs/connect/connect-api-reference/) to allow HashiCorp Vault to interact with 1Password items via a [1Password Connect server](https://developer.1password.com/docs/connect).
 
-*By accessing or using 1Password Developer Tools, you agree to the [API and SDK Terms of Service](https://1password.com/legal/api-sdk-terms-of-service).*
+*This project is licensed under [MIT](./LICENSE). Use of the 1Password APIs and services accessed through these tools is governed by the [1Password API Terms of Service](https://1password.com/legal/api-sdk-terms-of-service).*
 
 ## ✨ Get started
 
