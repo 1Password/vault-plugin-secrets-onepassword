@@ -2,6 +2,8 @@ module github.com/1Password/vault-plugin-secrets-onepassword
 
 go 1.20
 
+toolchain go1.26.10
+
 require (
 	github.com/1Password/connect-sdk-go v1.5.2
 	github.com/hashicorp/errwrap v1.1.0
