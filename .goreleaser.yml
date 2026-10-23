@@ -28,6 +28,9 @@ builds:
   ignore:
     - goos: darwin
       goarch: '386'
+    # Go 1.26 dropped support for windows/arm (32-bit).
+    - goos: windows
+      goarch: arm
   binary: '{{ .ProjectName }}_v{{ .Version }}'
 archives:
 - format: zip
