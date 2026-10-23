@@ -12,8 +12,23 @@
 
 ---
 
+[//]: # (START/v1.1.2)
+# v1.1.2
+
+## Fixes
+ * Fixed the `item list` command. {#37}
+ * Windows on 32-bit ARM (`windows_arm`) is no longer built, because Go 1.26 dropped support for that platform.
+
+## Security
+ * Built with Go 1.26.10 to address the eMudhra CA compromise. {#52}
+ * Updated google.golang.org/grpc to 1.56.3. {#38}
+
+---
+
 [//]: # (START/v1.1.1)
 # v1.1.1
+
+_Tagged but not released: the release build failed. See v1.1.2._
 
 ## Fixes
  * Fixed the `item list` command. {#37}
