@@ -12,6 +12,18 @@
 
 ---
 
+[//]: # (START/v1.1.1)
+# v1.1.1
+
+## Fixes
+ * Fixed the `item list` command. {#37}
+
+## Security
+ * Built with Go 1.26.10 to address the eMudhra CA compromise. {#52}
+ * Updated google.golang.org/grpc to 1.56.3. {#38}
+
+---
+
 [//]: # (START/v1.1.0)
 # v1.1.0
 
